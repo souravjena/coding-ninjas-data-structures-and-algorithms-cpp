@@ -4,7 +4,38 @@
 using namespace std;
 
 /**
- * @brief [#important, #queue][Code 11.1] LEVEL ORDER PRINTING of tree i.e Level-wise printing of tree.
+ * @brief [#trees, #recursion][Lec 11.6] To count number of nodes in the tree.
+ * 
+ * @param root Address of the root node of the tree.
+ * @return int Number of nodes in the tree.
+ */
+int countNodes(TreeNode<int>* root){
+
+    // Edge Case
+    if(root == NULL){
+        return 0;
+    }
+
+    int count;
+
+    // 1. Base Case
+    // if (root->children.size() == 0) then count itself and return. i.e return 1.
+    // No need to explicitly write this since the program won't enter the for loop if size == 0.
+    
+    // 2. Current Problem
+    count = 1;  // Count itself
+
+    // 3. Recursive Case
+    for(int i = 0; i < root->children.size(); i++){
+        count += countNodes(root->children.at(i));
+    }
+
+    return count;
+}
+
+
+/**
+ * @brief [#important, #trees, #queue][Code 11.1] LEVEL ORDER PRINTING of tree i.e Level-wise printing of tree.
  * 
  * @param root Address of the root node of the tree.
  */
@@ -40,7 +71,7 @@ void printLevelWise(TreeNode<int>* root) {
 }
 
 /**
- * @brief [#important, #queue][11.5] Take level-wise input of nodes of a tree. 
+ * @brief [#important, #trees, #queue][Lec 11.5] Take level-wise input of nodes of a tree. 
  * 
  * @return TreeNode<int>* Address of the root node of the tree.
  */
@@ -99,7 +130,7 @@ TreeNode<int>* takeInputLevelWise(){
 
 
 /**
- * @brief [#recursion][11.4] To take tree input from the user recursively.
+ * @brief [#trees, #recursion][Lec 11.4] To take tree input from the user recursively.
  * 
  * @return TreeNode<int>* Address of the root node.
  */
@@ -126,7 +157,7 @@ TreeNode<int>* takeInput(){
 
 
 /**
- * @brief [#recursion][11.4] Print tree using recursion.
+ * @brief [#trees, #recursion][Lec 11.4] Print tree using recursion.
  * 
  * @param root Root node of the tree.
  */
@@ -168,6 +199,8 @@ int main(){
     TreeNode<int>* node_root2 = takeInputLevelWise();
 
     printLevelWise(node_root2);
+
+    cout << "Number of nodes: " << countNodes(node_root2) << endl;
 
     return 0;
 }
