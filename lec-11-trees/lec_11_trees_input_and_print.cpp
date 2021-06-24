@@ -4,6 +4,37 @@
 using namespace std;
 
 /**
+ * @brief [#important, #queue][Code 11.1] LEVEL ORDER PRINTING of tree i.e Level-wise printing of tree.
+ * 
+ * @param root Address of the root node of the tree.
+ */
+void printLevelWise(TreeNode<int>* root) {
+    // Write your code here
+
+    queue<TreeNode<int>*> queue_pending_nodes;
+
+    queue_pending_nodes.push(root);
+
+    while(queue_pending_nodes.size() != 0){
+
+        TreeNode<int>* front_node = queue_pending_nodes.front();
+        queue_pending_nodes.pop();
+
+        cout << front_node->data << ": ";
+
+        for(int i = 0; i < front_node->children.size(); i++){
+            TreeNode<int>* child_node = front_node->children.at(i);
+
+            cout << child_node->data << ", ";
+
+            queue_pending_nodes.push(child_node);
+        }
+
+        cout << endl;
+    }
+}
+
+/**
  * @brief [#important, #queue][11.5] Take level-wise input of nodes of a tree. 
  * 
  * @return TreeNode<int>* Address of the root node of the tree.
@@ -131,7 +162,7 @@ int main(){
 
     TreeNode<int>* node_root2 = takeInputLevelWise();
 
-    printTree(node_root2);
+    printLevelWise(node_root2);
 
     return 0;
 }
