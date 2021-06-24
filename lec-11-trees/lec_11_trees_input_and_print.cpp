@@ -7,6 +7,44 @@ using namespace std;
 
 
 /**
+ * @brief [#trees, #recursion] To return height of a tree.
+ * 
+ * @param root Address of the root node of the tree.
+ * @return int Height of the tree.
+ */
+int getHeight(TreeNode<int>* root) {
+    
+    vector<int> vector_height_subtrees;     // Vector to store height of the child nodes
+    int max_height = 0;
+    int child_height;
+
+    // 1. Base Case
+    if(root->children.size() == 0){
+        return 1;
+    }
+
+
+    // 2. Recursive Case
+    for(int i = 0; i < root->children.size(); i++){
+        child_height = getHeight(root->children.at(i));
+        vector_height_subtrees.push_back(child_height);
+    }
+
+    // 3. Current Problem
+    for(int j = 0; j < vector_height_subtrees.size(); j++){
+
+        int curr_height = vector_height_subtrees.at(j);
+        
+        if(curr_height > max_height){
+            max_height = curr_height;
+        }
+    }
+
+    return (max_height + 1);
+}
+
+
+/**
  * @brief [#trees, #recursion] [Code 11.3] To return the node which holds the data of max value in the tree.
  * 
  * @param root Address of the root node of the tree.
@@ -276,6 +314,8 @@ int main(){
     cout << "Sum: " << sumOfNodes(node_root2) << endl;
 
     cout << "Max Node: " << maxDataNode(node_root2)->data << endl;
+
+    cout << "Height: " << getHeight(node_root2) << endl;
 
     return 0;
 }
