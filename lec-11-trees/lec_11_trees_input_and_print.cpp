@@ -1,7 +1,47 @@
 #include <iostream>
+#include <vector>
 #include <queue>
+#include <climits>
 #include "TreeNode.h"
 using namespace std;
+
+
+/**
+ * @brief [#trees, #recursion] [Code 11.3] To return the node which holds the data of max value in the tree.
+ * 
+ * @param root Address of the root node of the tree.
+ * @return TreeNode<int>* Address of the node holding the max value in the tree.
+ */
+TreeNode<int>* maxDataNode(TreeNode<int>* root) {
+    
+    int max_data = INT_MIN;
+    int curr_data;
+    int max_node_pos;
+    vector<TreeNode<int>*> vector_max_nodes;        // Vector to store max nodes of child nodes
+
+    // 1. Base Case
+    if(root->children.size() == 0){
+        return root;
+    }
+
+    // 2. Recursive Case
+    for(int i = 0; i < root->children.size(); i++){
+        vector_max_nodes.push_back(maxDataNode(root->children.at(i)));
+    }
+
+    // 3. Current Problem
+    for(int j = 0; j < vector_max_nodes.size(); j++){
+
+        curr_data = vector_max_nodes.at(j)->data;
+        if( curr_data > max_data){
+            max_data = curr_data;
+            max_node_pos = j;
+        }
+
+    }
+
+    return vector_max_nodes.at(max_node_pos);
+}
 
 
 /**
@@ -234,6 +274,8 @@ int main(){
     cout << "Number of nodes: " << countNodes(node_root2) << endl;
 
     cout << "Sum: " << sumOfNodes(node_root2) << endl;
+
+    cout << "Max Node: " << maxDataNode(node_root2)->data << endl;
 
     return 0;
 }
