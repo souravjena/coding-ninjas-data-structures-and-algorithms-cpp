@@ -7,6 +7,126 @@ using namespace std;
 
 
 /**
+ * @brief [#trees, #recursion] [Lec 11.10] To print nodes in Pre-order traversal of a tree.
+ * 
+ * @param root Address of the root node of the tree.
+ */
+void printPreOrder(TreeNode<int>* root) {
+    
+    int number_child;
+
+    // Edge Case
+    if(root == NULL){
+        return;
+    }
+    
+    number_child = root->children.size();
+    
+    // 1. Base Case
+    // No need to explicitly write the base case
+
+    // 2. Current Problem
+    // Pre-order: First print root then its children
+    cout << root->data << " ";
+
+    // 3. Recursive Case
+    for(int i = 0; i < number_child; i++){
+        printPreOrder(root->children.at(i));
+    }
+
+}
+
+
+/**
+ * @brief [#trees, #recursion] [Code 11.6] To print nodes in Post-order traversal of a tree.
+ * 
+ * @param root Address of the root node of the tree.
+ */
+void printPostOrder(TreeNode<int>* root) {
+    
+    int number_child;
+
+    // Edge Case
+    if(root == NULL){
+        return;
+    }
+
+    number_child = root->children.size();
+
+    // 1. Base Case
+    if(number_child == 0){
+        cout << root->data << " ";
+        return;
+    }
+
+    // 2. Recursive Case
+    for(int i = 0; i < number_child; i++){
+        printPostOrder(root->children.at(i));
+    }
+
+    // 3. Current Problem
+    cout << root->data << " ";
+}
+
+
+
+/**
+ * @brief [#trees, #recursion] [Code 11.5] Count number of leaf node of a tree.
+ * 
+ * @param root Address of the root node of the tree.
+ */
+int getLeafNodeCount(TreeNode<int>* root) {
+    
+    // Edge Case
+    if(root == NULL){
+        return 0;
+    }
+
+    int number_child = root->children.size();
+    int total = 0;
+
+    // Base Case
+    if(number_child == 0){
+        return 1;
+    }
+
+    // Recursive Case
+    for(int i = 0; i < number_child; i++){
+        total += getLeafNodeCount(root->children.at(i));
+    }
+
+    return total;
+}
+
+
+/**
+ * @brief [#trees, #recursion] [Lec 11.8] To print nodes at a given level.
+ * 
+ * @param root Address of the root node of the tree.
+ * @param level Nodes at which level you want to get printed.
+ */
+void printAtLevelK(TreeNode<int>* root, int level){
+
+    // 0. Edge Case
+    // Handling the edge case so that we can avoid segmentation fault error if someone passes NULL
+    if(root == NULL){
+        return;
+    }
+
+    // 1. Base Case
+    if(level == 0){
+        cout << root->data << endl;
+        return;
+    }
+
+    // 2. Recursive Case
+    for(int i = 0; i < root->children.size(); i++){
+        printAtLevelK(root->children.at(i), level - 1);
+    }
+}
+
+
+/**
  * @brief [#trees, #recursion] To return height of a tree.
  * 
  * @param root Address of the root node of the tree.
@@ -304,6 +424,7 @@ int main(){
 
     // printTree(node_root);
 
+    // 1 3 2 3 4 2 5 6 2 7 8 0 0 0 0 1 9 0
 
     TreeNode<int>* node_root2 = takeInputLevelWise();
 
@@ -316,6 +437,20 @@ int main(){
     cout << "Max Node: " << maxDataNode(node_root2)->data << endl;
 
     cout << "Height: " << getHeight(node_root2) << endl;
+
+
+    cout << "Node @ level = 2: " << endl;
+    printAtLevelK(node_root2, 2);
+
+    cout << "Number of leaf nodes: " << getLeafNodeCount(node_root2) << endl;
+
+    cout << "Print Pre-Order: "; 
+    printPreOrder(node_root2);
+    cout << endl;
+
+    cout << "Print Post-Order: "; 
+    printPostOrder(node_root2);
+    cout << endl;
 
     return 0;
 }
