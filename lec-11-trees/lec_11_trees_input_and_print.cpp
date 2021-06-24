@@ -9,24 +9,29 @@ using namespace std;
  * @param root Address of the root node of the tree.
  */
 void printLevelWise(TreeNode<int>* root) {
-    // Write your code here
 
     queue<TreeNode<int>*> queue_pending_nodes;
 
+    // 1. Push root in the pending nodes queue.
+    // This queue stores the nodes whose children we haven't printed yet.
     queue_pending_nodes.push(root);
 
+    // 2. Print all the nodes in the queue and their children
     while(queue_pending_nodes.size() != 0){
 
+        // 2.1 Take out the front element in queue.
         TreeNode<int>* front_node = queue_pending_nodes.front();
         queue_pending_nodes.pop();
 
         cout << front_node->data << ": ";
 
+        // 2.2 Print its children
         for(int i = 0; i < front_node->children.size(); i++){
             TreeNode<int>* child_node = front_node->children.at(i);
 
             cout << child_node->data << ", ";
 
+            // 2.3 Push these children in the queue so that its children can be printed
             queue_pending_nodes.push(child_node);
         }
 
