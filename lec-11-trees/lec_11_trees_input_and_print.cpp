@@ -14,42 +14,50 @@ TreeNode<int>* takeInputLevelWise(){
     int num_child;
     queue<TreeNode<int>*> queue_pending_nodes;
 
+    // 1. Create root node
     cout << "Enter root node data: ";
     cin >> node_data;
     
     TreeNode<int>* root_node = new TreeNode<int>(node_data);
 
+    // 2. Push root node to pending nodes queue.
+    // This queue signifies the nodes whose children we are suppose to get from the user.
     queue_pending_nodes.push(root_node);
 
+    // 3. Get children of all the nodes in the queue.
     while(queue_pending_nodes.size() != 0){
 
-        // 1. Take the front node from the queue
-
+        // 3.1. Take the front node from the queue
         TreeNode<int>* front_node = queue_pending_nodes.front();
         queue_pending_nodes.pop();
 
-        // 2. Number of children?
+        // 3.2. Number of children?
         cout << "Enter # of children of {" << front_node->data << "} node: ";
         cin >> num_child;
 
         
         for (int i = 0; i < num_child; i++){
 
-            // 3. Create children nodes
+            // 3.3. Create children nodes
             cout << "\t" << "Enter data of child node #" << i + 1 << " : ";
             cin >> node_data;
 
+            // [#important] 
+            // If we use static allocation here then then scope of the node will be
+            // the current iteration only and after the iteration this memory will get deallocated.
+            // Hence we are using dynamic allocation here.
             TreeNode<int>* child_node = new TreeNode<int>(node_data);
             
-            // 4. Connect them with the parent node
+            // 3.4. Connect them with the parent node
             front_node->children.push_back(child_node);
 
-            // 5. Push the child node in the queue
+            // 3.5. Push the child node in the queue
             queue_pending_nodes.push(child_node);
         }
 
     }
 
+    // 4. return the root_node.
     return root_node;
 }
 
