@@ -3,6 +3,37 @@
 #include "TreeNode.h"
 using namespace std;
 
+
+/**
+ * @brief [#trees, #recursion][Code 11.2] To find sum of all nodes in a tree.
+ * 
+ * @param root Address of the root node.
+ * @return int Sum of all nodes in the tree.
+ */
+int sumOfNodes(TreeNode<int>* root) {
+    
+    int sum;
+
+    // Edge Case
+    if(root == NULL){
+        return 0;
+    }
+
+    // 1. Base Case
+    // if (root->children.size() == 0) then sum = 0. so, return 0.
+    // No need to explicitly write this since the program won't enter the for loop if size == 0.
+
+    // 2. Current Problem
+    sum = root->data;
+
+    // 3. Recursive Case
+    for(int i = 0; i < root->children.size(); i++){
+        sum += sumOfNodes(root->children.at(i));
+    }
+
+    return sum;
+}
+
 /**
  * @brief [#trees, #recursion][Lec 11.6] To count number of nodes in the tree.
  * 
@@ -201,6 +232,8 @@ int main(){
     printLevelWise(node_root2);
 
     cout << "Number of nodes: " << countNodes(node_root2) << endl;
+
+    cout << "Sum: " << sumOfNodes(node_root2) << endl;
 
     return 0;
 }
