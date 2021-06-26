@@ -3,6 +3,10 @@
 #include "TreeNodeFn.h"
 #include <climits>
 
+/**
+ * @brief To hold a Tree Node and its sum.
+ * 
+ */
 class Pair{
     public:
         TreeNode<int>* node;
@@ -14,57 +18,56 @@ class Pair{
     }
 };
 
+
+/**
+ * @brief Helper function to return max-sum and max-node of a tree.
+ * 
+ * @param root Address of the root node of the tree.
+ * @return Pair Class to hold max-node and max-sum of a tree.
+ */
 Pair helper_maxSumNode(TreeNode<int>* root){
 
-    Pair ans;
+    Pair max;
 
     if(root == NULL){
-        return ans;
+        return max;
     }
 
     // 1. Compute current node's sum
     int curr_sum = root->data;
-    // cout << "root->data = " << root->data << endl;
-    
 
-    if(root->children.size() != 0){
-        
-        for(int i = 0; i < root->children.size(); i++){
-            curr_sum += root->children.at(i)->data;
-            // cout << "child_sum = " << curr_sum << endl;
-        }
-
-        // 2. Compute child nodes' sum and compare with current node's sum
-        for(int j = 0; j < root->children.size(); j++){
-            // cout << "loop: " << root->children.at(j)->data << endl;
-
-            Pair child = helper_maxSumNode(root->children.at(j));
-
-            // cout << "curr sum = " << curr_sum << "\t child sum = " << child.sum << endl;
-
-            if(child.sum > curr_sum){
-                ans.node = child.node;
-                ans.sum = child.sum;
-                // cout << "if" << endl;
-
-            } else {
-                ans.node = root;
-                ans.sum = curr_sum;
-                // cout << "else" << endl;
-            }
-        }
-    
-    } else {
-        if(curr_sum > ans.sum){
-            ans.node = root;
-            ans.sum = curr_sum;
-        }
+    for(int i = 0; i < root->children.size(); i++){
+        curr_sum += root->children.at(i)->data;
     }
 
-    cout << "ans sum = " << ans.sum << endl << endl;
+    max.node = root;
+    max.sum = curr_sum;
 
-    return ans;
+    // 2. Compute child nodes' sum and compare with current node's sum
+    for(int j = 0; j < root->children.size(); j++){
+        Pair child = helper_maxSumNode(root->children.at(j));
+
+        if(child.sum > max.sum){
+            max.node = child.node;
+            max.sum = child.sum;
+        } 
+    }
+
+    return max;
 }
+
+/**
+ * @brief Function to just return the max-node as per the requirement of the assignment.
+ * 
+ * @param root 
+ * @return TreeNode<int>* 
+ */
+TreeNode<int>* maxSumNode_justHelper(TreeNode<int>* root) {
+
+    return(helper_maxSumNode(root).node);
+
+}
+
 
 TreeNode<int>* maxSumNode(TreeNode<int>* root) {
     // Write your code here
@@ -112,7 +115,7 @@ int main(){
     printLevelWise(root_node);
     cout << endl << endl;
 
-    cout << maxSumNode(root_node)->data << endl;
+    cout << maxSumNode_justHelper(root_node)->data << endl;
 
     return 0;
 }
