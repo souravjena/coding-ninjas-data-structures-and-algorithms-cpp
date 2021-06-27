@@ -17,20 +17,6 @@ class Pair{
 };
 
 
-class Pair{
-
-    public:
-        TreeNode<int>* first_largest;
-        TreeNode<int>* second_largest;
-
-        Pair(){
-            this->first_largest = NULL;
-            this->second_largest = NULL;
-        }
-
-};
-
-
 Pair helper_getSecondLargestNode(TreeNode<int>* root) {
     
     Pair ans;
