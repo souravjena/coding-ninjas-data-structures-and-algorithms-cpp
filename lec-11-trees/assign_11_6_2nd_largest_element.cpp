@@ -17,8 +17,6 @@ class Pair{
 };
 
 
-#include <vector>
-
 class Pair{
 
     public:
