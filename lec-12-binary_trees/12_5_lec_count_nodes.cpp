@@ -3,6 +3,26 @@
 #include "BinaryTreeNode.h"
 using namespace std;
 
+
+/**
+ * @brief [#BT, #recursion] [12.5 L] Count number of nodes in a BT.
+ * 
+ * @param root Address of root node of the BT.
+ * @return int Number of nodes in the BT.
+ */
+int count_nodes_BT(BinaryTreeNode<int>* root){
+
+    // Base Case
+    if(root == NULL){
+        return 0;
+    }
+
+    // Current and Recursive Case
+    return (1 + count_nodes_BT(root->left) + count_nodes_BT(root->right));
+}
+
+
+
 /**
  * @brief Print Binary Tree Level-Wise.
  * 
@@ -99,11 +119,15 @@ BinaryTreeNode<int>* input_level_wise_BT(){
 }
 
 
+
+
 int main(){
 
     BinaryTreeNode<int>* root_node = input_level_wise_BT();
 
     printLevelWise(root_node);
+
+    cout << endl << "Number of nodes: " << count_nodes_BT(root_node) << endl;
 
     return 0;
 }
