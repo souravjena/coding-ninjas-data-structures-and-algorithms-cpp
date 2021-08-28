@@ -17,11 +17,15 @@ void print_queue(queue<int> q){
 
 int buyTicket(int *arr, int n, int k) {
     // Write your code here
-
-	queue<int> q;
+    queue<int> q;
 	priority_queue<int> max_pq;
 	int j;			// iterator
 	int t = 0;		// time counter
+    
+    // Handle Edge Case
+    if(n == 0){
+        return 0;
+    }
 
 	// 1. Push indexes of the elements in the queue
 	// 2. Prepare max-pq also.
@@ -36,24 +40,27 @@ int buyTicket(int *arr, int n, int k) {
 
 		// print_queue(q);
 		// cout << arr[j] << "\t" << max_pq.top() << endl;
+        
+        // 3. Check if max-priority person is You.
+        if( (q.front() == k) && (arr[k] == max_pq.top()) ){
+			t++;
+			break;
+		}
 		
+        // 4. If we reach max priority person in the current stream. 
 		if(arr[j] == max_pq.top()){
 			max_pq.pop();
 			q.pop();
 			t++;
 		
 		} else {
-			// Push the index to the back of the queue
+			// Else Push the person/index to the back of the queue.
 			int temp = q.front();
 			q.pop();
 			q.push(temp);
 		}
 
-		if( (q.front() == k) && (arr[k] == max_pq.top()) ){
-			t++;
-			break;
-		}
-
+		// 5. Increment the iterator and make it 0 if it overflows.
 		j++;
 		if(j == n){
 			j = 0;
