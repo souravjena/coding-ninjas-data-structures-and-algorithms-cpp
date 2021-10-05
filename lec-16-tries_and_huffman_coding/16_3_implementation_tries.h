@@ -138,4 +138,26 @@ class Trie{
 			removeWord(this->root, word);
 		}
 
+
+
+
+		// 16.9 - Assign - Pattern Matching
+		bool patternMatching(vector<string> vect, string pattern) {
+        	// Write your code here
+
+			// 1. Insert all words and their substrings in the Trie
+			for(int i = 0; i < vect.size(); i++){
+				string word = vect.at(i);
+				this->insertWord(word);
+
+				for(int j = 0; j < word.length(); j++){
+					this->insertWord(word.substr(0, j));
+					this->insertWord(word.substr(j, word.length()));
+				}
+			}
+
+			// 2. Search for the pattern in the trie
+			return (this->search(pattern));
+
+    	}
 };
